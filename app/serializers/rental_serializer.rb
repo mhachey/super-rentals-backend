@@ -11,4 +11,6 @@ class RentalSerializer
       lng: rental.lng
     }
   end
+
+  set_key_transform :camel_lower
 end

@@ -5,12 +5,12 @@ class RentalsController < ApplicationController
   def index
     @rentals = Rental.all
 
-    render json: @rentals
+    render jsonapi: @rentals
   end
 
   # GET /rentals/1
   def show
-    render json: @rental
+    render jsonapi: @rental
   end
 
   # POST /rentals
@@ -18,18 +18,18 @@ class RentalsController < ApplicationController
     @rental = Rental.new(rental_params)
 
     if @rental.save
-      render json: @rental, status: :created, location: @rental
+      render jsonapi: @rental, status: :created, location: @rental
     else
-      render json: @rental.errors, status: :unprocessable_entity
+      render jsonapi: @rental.errors, status: :unprocessable_entity
     end
   end
 
   # PATCH/PUT /rentals/1
   def update
     if @rental.update(rental_params)
-      render json: @rental
+      render jsonapi: @rental
     else
-      render json: @rental.errors, status: :unprocessable_entity
+      render jsonapi: @rental.errors
     end
   end
 
@@ -39,13 +39,17 @@ class RentalsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_rental
-      @rental = Rental.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
 
-    # Only allow a list of trusted parameters through.
-    def rental_params
-      params.require(:rental).permit(:title, :owner, :city, :lat, :lng, :category, :bedrooms, :image, :description)
-    end
+  def set_rental
+    @rental = Rental.find_by url_slug: params[:id]
+  end
+
+  # Only allow a list of trusted parameters through.
+  def rental_params
+    params.require(:rental).permit(
+      :title, :owner, :city, :lat, :lng, :category,
+      :bedrooms, :image, :description, :url_slug
+    )
+  end
 end
