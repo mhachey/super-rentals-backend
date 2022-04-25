@@ -4,7 +4,7 @@ class RentalSerializer
   set_type :rentals
   set_id :url_slug
 
-  attributes :id, :title, :owner, :city, :category, :bedrooms, :image
+  attributes :title, :owner, :city, :category, :bedrooms, :image
   attribute :location do |rental|
     {
       lat: rental.lat,
