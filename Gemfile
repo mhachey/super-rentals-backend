@@ -44,4 +44,4 @@ gem 'rspec-rails'
 
 # make JSON:API compliance easier
 gem 'jsonapi.rb'
-
+gem 'ransack'
